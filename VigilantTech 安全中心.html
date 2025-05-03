@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>电脑安全检测中心</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .header {
+            background-color: #1e88e5;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .scan-btn {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 15px;
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .scan-btn:hover {
+            background-color: #e64a19;
+            transform: scale(1.05);
+        }
+        .feature-box {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 40px;
+        }
+        .feature {
+            width: 30%;
+            min-width: 250px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .feature-icon {
+            font-size: 40px;
+            color: #1e88e5;
+            margin-bottom: 15px;
+        }
+        .progress-container {
+            display: none;
+            margin: 30px 0;
+        }
+        .progress-bar {
+            height: 20px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress {
+            height: 100%;
+            width: 0%;
+            background-color: #4caf50;
+            transition: width 0.3s;
+        }
+        .result {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+        }
+        .risk-item {
+            margin: 10px 0;
+            padding: 10px;
+            border-left: 4px solid #ff5722;
+            background-color: white;
+        }
+        .risk-high {
+            border-left-color: #f44336;
+        }
+        .risk-medium {
+            border-left-color: #ff9800;
+        }
+        .risk-low {
+            border-left-color: #4caf50;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+        @media (max-width: 768px) {
+            .feature {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>电脑安全检测中心</h1>
+        <p>全面保护您的数字安全</p>
+    </div>
+
+    <div class="container">
+        <h2>一键安全检测</h2>
+        <p>点击下方按钮开始扫描您的电脑安全状况，检测包括病毒、漏洞、隐私风险等多个方面</p>
+        
+        <button class="scan-btn" id="startScan">开始扫描</button>
+        
+        <div class="progress-container" id="progressContainer">
+            <h3>正在扫描中...</h3>
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+            <p id="scanStatus">初始化扫描引擎...</p>
+        </div>
+        
+        <div class="result" id="scanResult">
+            <h3>扫描结果</h3>
+            <div id="resultDetails"></div>
+        </div>
+        
+        <div class="feature-box">
+            <div class="feature">
+                <div class="feature-icon">🛡️</div>
+                <h3>病毒查杀</h3>
+                <p>检测恶意软件、勒索病毒等威胁</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔍</div>
+                <h3>隐私检查</h3>
+                <p>发现可能泄露的个人敏感信息</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🛠️</div>
+                <h3>系统修复</h3>
+                <p>自动修复检测到的安全漏洞</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2025 电脑安全检测中心 | 本工具仅提供基础检测功能，建议配合专业安全软件使用</p>
+    </footer>
+
+    <script>
+        document.getElementById('startScan').addEventListener('click', function() {
+            // 显示进度条
+            document.getElementById('progressContainer').style.display = 'block';
+            document.getElementById('scanResult').style.display = 'none';
+            
+            // 模拟扫描过程
+            let progress = 0;
+            const progressBar = document.getElementById('progressBar');
+            const scanStatus = document.getElementById('scanStatus');
+            const scanInterval = setInterval(function() {
+                progress += Math.random() * 10;
+                if (progress > 100) progress = 100;
+                progressBar.style.width = progress + '%';
+                
+                // 更新状态文本
+                if (progress < 30) {
+                    scanStatus.textContent = '正在扫描系统文件...';
+                } else if (progress < 60) {
+                    scanStatus.textContent = '正在检测网络漏洞...';
+                } else if (progress < 90) {
+                    scanStatus.textContent = '正在分析隐私风险...';
+                } else {
+                    scanStatus.textContent = '正在生成报告...';
+                }
+                
+                // 扫描完成
+                if (progress >= 100) {
+                    clearInterval(scanInterval);
+                    showScanResults();
+                }
+            }, 500);
+        });
+        
+        function showScanResults() {
+            document.getElementById('progressContainer').style.display = 'none';
+            const resultDiv = document.getElementById('scanResult');
+            resultDiv.style.display = 'block';
+            
+            // 模拟生成扫描结果
+            const results = [
+                { name: '系统漏洞检测', risk: 'high', desc: '发现3个高危系统漏洞' },
+                { name: '恶意软件扫描', risk: 'low', desc: '未检测到已知恶意软件' },
+                { name: '隐私泄露风险', risk: 'medium', desc: '检测到2个可能泄露隐私的设置' },
+                { name: '浏览器安全', risk: 'medium', desc: '检测到过期的浏览器插件' },
+                { name: '网络防护', risk: 'low', desc: '防火墙运行正常' }
+            ];
+            
+            const resultDetails = document.getElementById('resultDetails');
+            resultDetails.innerHTML = '';
+            
+            results.forEach(item => {
+                const riskClass = 'risk-' + item.risk;
+                const riskItem = document.createElement('div');
+                riskItem.className = 'risk-item ' + riskClass;
+                riskItem.innerHTML = `
+                    <h4>${item.name}</h4>
+                    <p>${item.desc}</p>
+                    <p class="risk-level">风险等级: ${item.risk.toUpperCase()}</p>
+                `;
+                resultDetails.appendChild(riskItem);
+            });
+            
+            // 添加修复按钮
+            const fixBtn = document.createElement('button');
+            fixBtn.className = 'scan-btn';
+            fixBtn.textContent = '一键修复';
+            fixBtn.style.marginTop = '20px';
+            fixBtn.onclick = function() {
+                alert('由于浏览器安全限制，实际修复功能需要安装客户端程序。');
+            };
+            resultDetails.appendChild(fixBtn);
+        }
+    </script>
+</body>
+</html>
